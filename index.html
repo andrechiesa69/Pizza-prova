@@ -25,58 +25,76 @@
     model-viewer {
       width: 100%;
       height: 100%;
-      --poster-color: transparent;
+      background-color: #ffffff;
     }
 
-    /* Pulsante riposizionato IN ALTO per evitare le barre di Safari e Chrome */
+    /* Pulsante AR gigante visibile in alto */
     .ar-button {
-      background-color: #e63946;
+      background-color: #ff3b30;
       color: #ffffff;
       border: none;
-      padding: 16px 28px;
-      font-size: 17px;
-      font-weight: bold;
+      padding: 18px 36px;
+      font-size: 18px;
+      font-weight: 800;
       border-radius: 50px;
       position: absolute;
-      top: 30px; /* Posizionato in alto */
+      top: 40px;
       left: 50%;
       transform: translateX(-50%);
-      box-shadow: 0 4px 18px rgba(0, 0, 0, 0.3);
+      box-shadow: 0 8px 25px rgba(255, 59, 48, 0.4);
       cursor: pointer;
       z-index: 9999;
       display: flex;
       align-items: center;
-      gap: 8px;
+      gap: 10px;
       white-space: nowrap;
+      letter-spacing: 0.5px;
     }
 
     .ar-button:active {
       transform: translateX(-50%) scale(0.95);
-      background-color: #d62828;
+      background-color: #e02b20;
     }
   </style>
 </head>
 <body>
 
+  <!-- Collegamento nativo rapido per iOS/Safari e Android -->
+  <a id="ios-ar-link" rel="ar" href="pizza01.usdz" style="display: none;">
+    <img src="pizza01.glb" alt="Pizza AR">
+  </a>
+
   <model-viewer 
+    id="viewer"
     src="pizza01.glb" 
     ios-src="pizza01.usdz" 
     alt="Pizza 3D" 
     ar 
     ar-modes="quick-look scene-viewer webxr" 
-    ar-scale="fixed"
-    ar-placement="floor"
     camera-controls 
     auto-rotate
-    shadow-intensity="1.2"
-    shadow-softness="0.8"
-    quick-look-browsers="safari chrome">
+    shadow-intensity="1">
     
-    <button slot="ar-button" class="ar-button">
+    <button slot="ar-button" id="custom-ar-btn" class="ar-button">
       🍕 VEDI SUL TAVOLO (AR)
     </button>
 
   </model-viewer>
+
+  <script>
+    // Rileva se l'utente è su iPhone/iPad e forza l'avvio del visore nativo Apple senza bug di trasparenza
+    const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
+    const arButton = document.getElementById('custom-ar-btn');
+    const iosLink = document.getElementById('ios-ar-link');
+
+    if (isIOS) {
+      arButton.addEventListener('click', (e) => {
+        e.preventDefault();
+        // Apre direttamente il file USDZ sfruttando la tecnologia Quick Look nativa di iOS
+        iosLink.click();
+      });
+    }
+  </script>
 
 </body>
 </html>
