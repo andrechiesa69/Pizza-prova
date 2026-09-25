@@ -3,56 +3,79 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Visualizzatore AR - Pizza</title>
-  <!-- Carica il componente Google Model Viewer -->
+  <title>Pizza in Realtà Aumentata</title>
+
+  <!-- Importa la libreria ufficiale Google <model-viewer> -->
   <script type="module" src="https://ajax.googleapis.com/ajax/libs/model-viewer/3.4.0/model-viewer.min.js"></script>
+
   <style>
-    body { 
-      margin: 0; 
-      padding: 0; 
-      width: 100vw; 
-      height: 100vh; 
-      overflow: hidden; 
-      font-family: Arial, sans-serif;
+    * {
+      box-sizing: border-box;
     }
-    model-viewer { 
-      width: 100%; 
-      height: 100%; 
+    body {
+      margin: 0;
+      padding: 0;
+      width: 100vw;
+      height: 100vh;
+      overflow: hidden;
+      font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
       background-color: #f5f5f5;
     }
+    
+    /* Il contenitore 3D occupa tutto lo schermo */
+    model-viewer {
+      width: 100%;
+      height: 100%;
+      --poster-color: transparent;
+    }
+
+    /* Pulsante personalizzato per attivare la Realtà Aumentata */
     .ar-button {
-      position: absolute; 
-      bottom: 30px; 
-      left: 50%; 
-      transform: translateX(-50%); 
-      padding: 14px 28px; 
-      background-color: #e63946; 
-      color: white; 
-      border: none; 
-      border-radius: 30px; 
-      font-size: 16px; 
-      font-weight: bold;
-      box-shadow: 0px 4px 12px rgba(0,0,0,0.25);
+      background-color: #e63946;
+      color: #ffffff;
+      border: none;
+      padding: 14px 28px;
+      font-size: 16px;
+      font-weight: 600;
+      border-radius: 50px;
+      position: absolute;
+      bottom: 30px;
+      left: 50%;
+      transform: translateX(-50%);
+      box-shadow: 0px 6px 16px rgba(0, 0, 0, 0.25);
       cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      transition: background-color 0.2s ease, transform 0.2s ease;
+      z-index: 10;
+    }
+
+    .ar-button:active {
+      transform: translateX(-50%) scale(0.96);
+      background-color: #d62828;
     }
   </style>
 </head>
 <body>
 
-  <!-- Configurazione per il file pizza01.glb -->
+  <!-- Componente 3D configurato per il file pizza.glb -->
   <model-viewer 
-    src="pizza01.glb" 
+    src="pizza.glb" 
+    alt="Modello 3D Pizza" 
     ar 
     ar-modes="webxr scene-viewer quick-look" 
     camera-controls 
-    auto-rotate 
-    shadow-intensity="1">
+    auto-rotate
+    shadow-intensity="1.2"
+    shadow-softness="0.8"
+    touch-action="pan-y">
     
-    <!-- Pulsante per attivare la Realtà Aumentata -->
+    <!-- Pulsante per proiettare la pizza sul tavolo via fotocamera -->
     <button slot="ar-button" class="ar-button">
-      🍕 Vedi sul tuo tavolo (AR)
+      🍕 Vedi la pizza sul tuo tavolo
     </button>
-    
+
   </model-viewer>
 
 </body>
