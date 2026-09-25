@@ -3,63 +3,85 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Pizza 3D AR - Compatibile Android e iOS</title>
+  <title>Test Pizza AR</title>
 
-  <!-- Libreria Google Model Viewer -->
+  <!-- Importazione script Google -->
   <script type="module" src="https://ajax.googleapis.com/ajax/libs/model-viewer/3.4.0/model-viewer.min.js"></script>
 
   <style>
-    html, body {
+    body {
       margin: 0;
       padding: 0;
       width: 100vw;
       height: 100vh;
-      overflow: hidden;
-      background-color: #ffffff;
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      background-color: #2b2b2b; /* Sfondo scuro per testare se l'HTML viene letto */
+      color: white;
+      font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+      text-align: center;
+    }
+    
+    #status {
+      padding: 10px;
+      font-size: 14px;
+      background: #333;
     }
 
     model-viewer {
       width: 100%;
-      height: 100%;
+      height: calc(100vh - 50px);
+      background-color: #111111;
     }
 
-    /* Pulsante AR visibile su entrambi i sistemi */
-    .ar-button {
-      background-color: #e63946;
-      color: #ffffff;
-      border: none;
+    .ar-btn {
+      background-color: #ff4757;
+      color: white;
       padding: 14px 28px;
+      border: none;
+      border-radius: 30px;
       font-size: 16px;
       font-weight: bold;
-      border-radius: 30px;
       position: absolute;
-      bottom: 40px;
+      bottom: 30px;
       left: 50%;
       transform: translateX(-50%);
-      box-shadow: 0 4px 14px rgba(0,0,0,0.25);
-      cursor: pointer;
-      z-index: 100;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.5);
     }
   </style>
 </head>
 <body>
 
+  <div id="status">🔄 Caricamento in corso...</div>
+
   <model-viewer 
+    id="viewer"
     src="pizza.glb" 
     ios-src="pizza.usdz" 
     alt="Pizza 3D" 
     ar 
     ar-modes="quick-look scene-viewer webxr" 
     camera-controls 
-    auto-rotate
-    shadow-intensity="1">
+    auto-rotate>
     
-    <button slot="ar-button" class="ar-button">
-      🍕 Proietta la pizza sul tavolo
+    <button slot="ar-button" class="ar-btn">
+      🍕 Apri Fotocamera (AR)
     </button>
 
   </model-viewer>
+
+  <script>
+    const viewer = document.getElementById('viewer');
+    const status = document.getElementById('status');
+
+    viewer.addEventListener('load', () => {
+      status.style.background = '#2ed573';
+      status.innerText = '✅ Modello 3D caricato con successo!';
+    });
+
+    viewer.addEventListener('error', (e) => {
+      status.style.background = '#ff4757';
+      status.innerText = '❌ Errore: file pizza.glb/pizza.usdz non trovato o bloccato!';
+    });
+  </script>
 
 </body>
 </html>
