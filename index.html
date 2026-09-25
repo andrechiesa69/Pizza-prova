@@ -28,7 +28,7 @@
       background-color: #ffffff;
     }
 
-    /* Pulsante AR gigante visibile in alto */
+    /* Pulsante AR visibile in alto */
     .ar-button {
       background-color: #ff3b30;
       color: #ffffff;
@@ -71,6 +71,7 @@
     alt="Pizza 3D" 
     ar 
     ar-modes="quick-look scene-viewer webxr" 
+    scale="10 10 10"
     camera-controls 
     auto-rotate
     shadow-intensity="1">
@@ -82,7 +83,7 @@
   </model-viewer>
 
   <script>
-    // Rileva se l'utente è su iPhone/iPad e forza l'avvio del visore nativo Apple senza bug di trasparenza
+    // Rileva se l'utente è su iPhone/iPad e avvia Quick Look
     const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
     const arButton = document.getElementById('custom-ar-btn');
     const iosLink = document.getElementById('ios-ar-link');
@@ -90,7 +91,6 @@
     if (isIOS) {
       arButton.addEventListener('click', (e) => {
         e.preventDefault();
-        // Apre direttamente il file USDZ sfruttando la tecnologia Quick Look nativa di iOS
         iosLink.click();
       });
     }
