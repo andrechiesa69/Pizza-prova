@@ -2,8 +2,8 @@
 <html lang="it">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Pizza in Realtà Aumentata</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Pizza 3D AR</title>
 
   <!-- Libreria Google Model Viewer -->
   <script type="module" src="https://ajax.googleapis.com/ajax/libs/model-viewer/3.4.0/model-viewer.min.js"></script>
@@ -28,33 +28,31 @@
       --poster-color: transparent;
     }
 
-    /* Pulsante AR ben visibile al centro-basso dello schermo */
+    /* Pulsante riposizionato IN ALTO per evitare le barre di Safari e Chrome */
     .ar-button {
       background-color: #e63946;
       color: #ffffff;
       border: none;
-      padding: 16px 32px;
-      font-size: 18px;
+      padding: 16px 28px;
+      font-size: 17px;
       font-weight: bold;
       border-radius: 50px;
       position: absolute;
-      bottom: 40px;
+      top: 30px; /* Posizionato in alto */
       left: 50%;
       transform: translateX(-50%);
-      box-shadow: 0 6px 20px rgba(230, 57, 70, 0.4);
+      box-shadow: 0 4px 18px rgba(0, 0, 0, 0.3);
       cursor: pointer;
+      z-index: 9999;
       display: flex;
       align-items: center;
-      gap: 10px;
-      z-index: 999;
-      animation: pulse 2s infinite;
+      gap: 8px;
+      white-space: nowrap;
     }
 
-    /* Animazione per attirare l'attenzione sul pulsante */
-    @keyframes pulse {
-      0% { transform: translateX(-50%) scale(1); }
-      50% { transform: translateX(-50%) scale(1.05); }
-      100% { transform: translateX(-50%) scale(1); }
+    .ar-button:active {
+      transform: translateX(-50%) scale(0.95);
+      background-color: #d62828;
     }
   </style>
 </head>
@@ -66,9 +64,12 @@
     alt="Pizza 3D" 
     ar 
     ar-modes="quick-look scene-viewer webxr" 
+    ar-scale="fixed"
+    ar-placement="floor"
     camera-controls 
     auto-rotate
-    shadow-intensity="1"
+    shadow-intensity="1.2"
+    shadow-softness="0.8"
     quick-look-browsers="safari chrome">
     
     <button slot="ar-button" class="ar-button">
